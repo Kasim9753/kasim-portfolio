@@ -1,7 +1,14 @@
+import express from "express";
+import Message from "../models/Message.js";
+
+const router = express.Router();
+
+// POST Contact Form API
 router.post("/", async (req, res) => {
   try {
     const { name, email, subject, message } = req.body;
 
+    // Validation
     if (!name || !email || !message) {
       return res.status(400).json({
         success: false,
@@ -9,6 +16,7 @@ router.post("/", async (req, res) => {
       });
     }
 
+    // Save Message in MongoDB
     const newMessage = await Message.create({
       name,
       email,
@@ -30,3 +38,6 @@ router.post("/", async (req, res) => {
     });
   }
 });
+
+export default router;
+
