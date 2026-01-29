@@ -12,11 +12,16 @@ connectDB();
 
 const app = express();
 
-// Middleware
-app.use(cors());
+// ✅ Middleware
+app.use(
+  cors({
+    origin: "*", // Allow all frontend requests
+  })
+);
+
 app.use(express.json());
 
-// API Routes
+// ✅ API Routes
 app.use("/api/contact", contactRoutes);
 
 // Path Fix (for ES Modules)
@@ -31,12 +36,12 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// All Routes Handle
+// Handle All Other Routes
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// Server Start
+// ✅ Server Start (Render uses PORT automatically)
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
